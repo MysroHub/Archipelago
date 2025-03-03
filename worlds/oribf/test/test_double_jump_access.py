@@ -1,9 +1,10 @@
 ﻿from worlds.oribf.test import OriBlindForestTestBase
 
 
-class Test(OriBlindForestTestBase):
+class DoubleJumpAccessTest(OriBlindForestTestBase):
 
     def test_double_jump_location(self) -> None:
+        """Test locations that require Double Jump"""
         locations = [
             "LeftGrottoTeleporterExp",
             "MistyKeystone3",
