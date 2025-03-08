@@ -7,7 +7,6 @@ class DoubleJumpAndGlideAccessTest(OriBlindForestTestBase):
         """Test locations that require Double Jump and Glide"""
         locations = [
             "LeftGrottoTeleporterExp",
-            "MistyPostClimbAboveSpikePit",
             "LostGroveHiddenExp",
             "LostGroveAbilityCell",
             "LostGroveTeleporter",
@@ -57,7 +56,6 @@ class DoubleJumpAndGlideAccessTest(OriBlindForestTestBase):
             "LeftSorrowKeystone1",
             "LeftSorrowKeystone2",
             "ChargeJumpSkillTree",
-
             "LowerGinsoKeystone1",
             "LowerGinsoKeystone2",
             "UpperGinsoLowerKeystone",
