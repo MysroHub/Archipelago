@@ -1,4 +1,6 @@
-﻿locations_dependencies_dic: dict[str, list[str]] = {
+﻿import itertools
+
+locations_dependencies_dic: dict[str, list[str]] = {
 	"LeftGrottoTeleporterExp": ["DoubleJump"],
     "MistyPostClimbAboveSpikePit": ["DoubleJump", "Glide"],
     "LostGroveHiddenExp": ["DoubleJump"],
@@ -76,51 +78,57 @@
 
 }
 
-# Pour chaque combinaison, créer une liste avec les clés
+def all_combinations(any_list):
+    return itertools.chain.from_iterable(
+        itertools.combinations(any_list, i + 1)
+        for i in range(len(any_list))
+    )
 
-from collections import defaultdict
+tests_list = dict()
 
-test_locations = defaultdict(list)
+for location, items in locations_dependencies_dic.items():
+    for combination in all_combinations(items):
+        combini_tuple = tuple(combination)
 
-items_list = None
-items_names = None
-locations_for_items = None
-locations_string = None
-
-
-for location, dependencies in locations_dependencies_dic.items():
-    key = tuple(sorted(set(dependencies)))
-    test_locations[key].append(location)
-
-
-for combo, locations in sorted(test_locations.items()):
-    combo_str = ", ".join(f'"{dep}"' for dep in combo)
-
-for items, locations in test_locations.items():
-    if len(items) == 1:
-        names_of_items = f"'{items[0]}'"
-        items_names = items[0]
-    else:
-        names_of_items = ", ".join(f"'{item}'" for item in items)
-        items_names = "_".join(items)
-    items_list = names_of_items
-    locations_for_items = locations
-    locations_string = ",\n ".join(f"'{location_item}'" for location_item in locations)
-
-    template = """
-    from worlds.oribf.test import OriBlindForestTestBase
+        if combini_tuple not in tests_list:
+            tests_list[combini_tuple] = list()
+        tests_list[combini_tuple].append(location)
 
 
-    class {0}AccessTest(OriBlindForestTestBase):
+for combini_tuple, locations in tests_list.items():
 
-        def test_{0}_location(self) -> None:
-        \"\"\"Test locations that require {0}\"\"\"
-            locations = [
-                {1}
-            ]
+    items_name = "_".join(combini_tuple)
 
-            items = [[{2}]]
+    items_name_doc = ", ".join(combini_tuple)
 
-            self.assertAccessDependency(locations, items)""".format(items_names, locations_string, items_list)
+    locations_string = ",\n        ".join(f"'{location}'" for location in locations)
 
-    print(f"résultat template:\n {template}")
+    items_string = ", ".join(f"'{item}'" for item in combini_tuple)
+
+    template = f"""
+from worlds.oribf.test import OriBlindForestTestBase
+
+
+class {0}AccessTest(OriBlindForestTestBase):
+
+    def test_{0}_location(self) -> None:
+        \"\"\"Test locations that require {1}\"\"\"
+        locations = [
+        {2}
+        ]
+
+        items = [[{3}]]
+
+        self.assertAccessDependency(locations, items)
+""".format(items_name, items_name_doc, locations_string, items_string)
+
+    f = open(f"test_{items_name}_access.py", "w")
+    f.write(template)
+    f.close()
+
+
+
+
+
+
+
