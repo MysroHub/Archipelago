@@ -1,92 +1,94 @@
 ﻿import itertools
 
-locations_dependencies_dic: dict[str, list[str]] = {
-	"LeftGrottoTeleporterExp": ["DoubleJump"],
-    "MistyPostClimbAboveSpikePit": ["DoubleJump", "Glide"],
-    "LostGroveHiddenExp": ["DoubleJump"],
-    "LostGroveAbilityCell": ["DoubleJump"],
-    "LostGroveTeleporter": ["DoubleJump"],
-    "GroveAboveSpiderWaterExp": ["DoubleJump"],
-    "GroveAboveSpiderWaterEnergyCell": ["DoubleJump"],
-    "UpperGinsoUpperLeftKeystone": ["DoubleJump"],
-    "UpperGinsoUpperRightKeystone": ["DoubleJump"],
-    "GinsoEscapeExit": ["DoubleJump"],
-    "GinsoEscapeHangingExp": ["DoubleJump"],
-    "GinsoEscapeProjectileExp": ["DoubleJump"],
-    "GinsoEscapeJumpPadExp": ["DoubleJump"],
-    "GinsoEscapeSpiderExp": ["DoubleJump"],
-    "ClimbSkillTree": ["Glide"],
-    "KuroPerchExp": ["Glide"],
-    "MistyPlant": ["Glide"],
-    "MistyMortarCorridorUpperExp": ["Glide"],
-    "MistyMortarCorridorHiddenExp": ["Glide"],
-    "MistyPostClimbSpikeCave": ["DoubleJump", "Glide"],
-    "MistyAbilityCell": ["DoubleJump", "Glide"],
-    "MistyKeystone2": ["DoubleJump", "Glide"],
-    "MistyKeystone1": ["Glide"],
-    "MistyFrogNookExp": ["DoubleJump", "Glide"],
-    "MistyKeystone3": ["DoubleJump", "Glide"],
-    "MistyGrenade": ["DoubleJump", "Glide"],
-    "MistyKeystone4": ["DoubleJump", "Glide"],
-    "GumonSeal": ["DoubleJump", "Glide"],
-    "SorrowLowerLeftKeystone": ["Glide"],
-    "LeftSorrowKeystone3": ["Glide"],
-    "LeftSorrowKeystone4": ["Glide"],
-    "LeftSorrowEnergyCell": ["Glide"],
-    "UpperSorrowFarLeftKeystone": ["Glide"],
-    "UpperSorrowSpikeExp": ["Glide"],
-    "UpperSorrowLeftKeystone": ["Glide"],
-    "UpperSorrowRightKeystone": ["Glide"],
-    "UpperSorrowFarRightKeystone": ["Glide"],
-    "SunstonePlant": ["DoubleJump", "Glide"],
-    "Sunstone": ["DoubleJump", "Glide"],
-    "SwampTeleporterAbilityCell": ["Glide"],
-    "InnerSwampEnergyCell": ["Glide"],
-    "ValleyRightFastStomplessCell": ["Glide"],
-    "SorrowHealthCell": ["Glide"],
-    "LeftSorrowAbilityCell": ["Glide"],
-    "LeftSorrowGrenade": ["Glide"],
-    "LeftSorrowPlant": ["Glide"],
-    "LeftSorrowKeystone1": ["Glide"],
-    "LeftSorrowKeystone2": ["Glide"],
-    "ChargeJumpSkillTree": ["Glide"],
-    "LowerGinsoKeystone1": ["DoubleJump", "Glide"],
-    "LowerGinsoKeystone2": ["DoubleJump", "Glide"],
-    "UpperGinsoLowerKeystone": ["DoubleJump", "Glide"],
-    "UpperGinsoRightKeystone": ["DoubleJump", "Glide"],
-    "TopGinsoLeftLowerExp": ["DoubleJump", "Glide"],
-    "BelowGrottoTeleporterHealthCell": ["DoubleJump", "Glide"],
-    "BelowGrottoTeleporterPlant": ["DoubleJump", "Glide"],
-    "HoruFieldsEnergyCell": ["DoubleJump", "Glide"],
-    "HoruMap": ["DoubleJump", "Glide"],
-    "HoruL1": ["DoubleJump", "Glide"],
-    "HoruL2": ["DoubleJump", "Glide"],
-    "HoruL3": ["DoubleJump", "Glide"],
-    "HoruR1HangingExp": ["DoubleJump", "Glide"],
-    "HoruR1Mapstone": ["DoubleJump", "Glide"],
-    "HoruR1": ["DoubleJump", "Glide"],
-    "HoruR2": ["Glide"],
-    "HoruR3": ["DoubleJump", "Glide"],
-    "HoruR1EnergyCell": ["DoubleJump", "Glide"],
-    "HoruR3Plant": ["DoubleJump", "Glide"],
-    "SorrowEntranceAbilityCell": ["DoubleJump", "Glide"],
-    "SorrowSpikeKeystone": ["DoubleJump", "Glide"],
-    "SorrowHiddenKeystone": ["DoubleJump", "Glide"],
-    "SorrowMainShaftKeystone": ["DoubleJump", "Glide"],
-    "SorrowMapstone": ["DoubleJump", "Glide"],
-    "SorrowMap": ["DoubleJump", "Glide"],
+locations_dependencies_dic: dict[str, list[list[str]]] = {
+	"LeftGrottoTeleporterExp": [["DoubleJump"]],
+    "MistyPostClimbAboveSpikePit": [["DoubleJump", "Glide"]],
+    "LostGroveHiddenExp": [["DoubleJump"]],
+    "LostGroveAbilityCell": [["DoubleJump"]],
+    "LostGroveTeleporter": [["DoubleJump"]],
+    "GroveAboveSpiderWaterExp": [["DoubleJump"]],
+    "GroveAboveSpiderWaterEnergyCell": [["DoubleJump"]],
+    "UpperGinsoUpperLeftKeystone": [["DoubleJump"]],
+    "UpperGinsoUpperRightKeystone": [["DoubleJump"]],
+    "GinsoEscapeExit": [["DoubleJump"]],
+    "GinsoEscapeHangingExp": [["DoubleJump"]],
+    "GinsoEscapeProjectileExp": [["DoubleJump"]],
+    "GinsoEscapeJumpPadExp": [["DoubleJump"]],
+    "GinsoEscapeSpiderExp": [["DoubleJump"]],
+    "ClimbSkillTree": [["Glide"]],
+    "KuroPerchExp": [["Glide"]],
+    "MistyPlant": [["Glide"]],
+    "MistyMortarCorridorUpperExp": [["Glide"]],
+    "MistyMortarCorridorHiddenExp":[["Glide"]],
+    "MistyPostClimbSpikeCave": [["DoubleJump", "Glide"]],
+    "MistyAbilityCell": [["DoubleJump", "Glide"]],
+    "MistyKeystone2": [["DoubleJump", "Glide"]],
+    "MistyKeystone1": [["Glide"]],
+    "MistyFrogNookExp": [["DoubleJump", "Glide"]],
+    "MistyKeystone3": [["DoubleJump", "Glide"]],
+    "MistyGrenade": [["DoubleJump", "Glide"]],
+    "MistyKeystone4": [["DoubleJump", "Glide"]],
+    "GumonSeal": [["DoubleJump", "Glide"]],
+    "SorrowLowerLeftKeystone": [["Glide"]],
+    "LeftSorrowKeystone3": [["Glide"]],
+    "LeftSorrowKeystone4": [["Glide"]],
+    "LeftSorrowEnergyCell": [["Glide"]],
+    "UpperSorrowFarLeftKeystone": [["Glide"]],
+    "UpperSorrowSpikeExp": [["Glide"]],
+    "UpperSorrowLeftKeystone": [["Glide"]],
+    "UpperSorrowRightKeystone": [["Glide"]],
+    "UpperSorrowFarRightKeystone": [["Glide"]],
+    "SunstonePlant": [["DoubleJump", "Glide"]],
+    "Sunstone": [["DoubleJump"], ["Glide"]],
+    "SwampTeleporterAbilityCell": [["Glide"]],
+    "InnerSwampEnergyCell": [["Glide"]],
+    "ValleyRightFastStomplessCell": [["Glide"]],
+    "SorrowHealthCell": [["Glide"]],
+    "LeftSorrowAbilityCell": [["Glide"]],
+    "LeftSorrowGrenade": [["Glide"]],
+    "LeftSorrowPlant": [["Glide"]],
+    "LeftSorrowKeystone1": [["Glide"]],
+    "LeftSorrowKeystone2": [["Glide"]],
+    "ChargeJumpSkillTree": [["Glide"]],
+    "LowerGinsoKeystone1": [["DoubleJump", "Glide"]],
+    "LowerGinsoKeystone2": [["DoubleJump", "Glide"]],
+    "UpperGinsoLowerKeystone": [["DoubleJump", "Glide"]],
+    "UpperGinsoRightKeystone": [["DoubleJump", "Glide"]],
+    "TopGinsoLeftLowerExp": [["DoubleJump", "Glide"]],
+    "BelowGrottoTeleporterHealthCell": [["DoubleJump", "Glide"]],
+    "BelowGrottoTeleporterPlant": [["DoubleJump", "Glide"]],
+    "HoruFieldsEnergyCell": [["DoubleJump", "Glide"]],
+    "HoruMap": [["DoubleJump", "Glide"]],
+    "HoruL1": [["DoubleJump", "Glide"]],
+    "HoruL2": [["DoubleJump", "Glide"]],
+    "HoruL3": [["DoubleJump", "Glide"]],
+    "HoruR1HangingExp": [["DoubleJump", "Glide"]],
+    "HoruR1Mapstone": [["DoubleJump", "Glide"]],
+    "HoruR1": [["DoubleJump", "Glide"]],
+    "HoruR2": [["Glide"]],
+    "HoruR3": [["DoubleJump", "Glide"]],
+    "HoruR1EnergyCell": [["DoubleJump", "Glide"]],
+    "HoruR3Plant": [["DoubleJump", "Glide"]],
+    "SorrowEntranceAbilityCell": [["DoubleJump", "Glide"]],
+    "SorrowSpikeKeystone": [["DoubleJump", "Glide"]],
+    "SorrowHiddenKeystone": [["DoubleJump", "Glide"]],
+    "SorrowMainShaftKeystone": [["DoubleJump", "Glide"]],
+    "SorrowMapstone": [["DoubleJump", "Glide"]],
+    "SorrowMap": [["DoubleJump", "Glide"]],
 
 }
 all_items = []
 for items in locations_dependencies_dic.values():
-    for item in items:
-        if item not in all_items:
-            all_items.append(item)
+    for item_list in items:
+        for item in item_list:
+            if item not in all_items:
+                all_items.append(item)
 
 def find_all_combinations(item_tuple, all_items):
     all_items_copy = all_items.copy()
     for item_list in item_tuple:
-        all_items_copy.remove(item_list)
+        for item in item_list:
+            all_items_copy.remove(item)
     #combinations = [itertools.combinations(all_items_copy, i + 1) for i in range(len(all_items_copy))]
     combinations = []
     for i in range(len(all_items_copy)):
@@ -95,9 +97,9 @@ def find_all_combinations(item_tuple, all_items):
     for combination in combinations:
         for combination_tuple in combination:
                 combination_list = list(combination_tuple)
-                combination_list.extend(item_tuple)
+                combination_list.extend(item_list)
                 resultat.append(frozenset(combination_list))
-    resultat.append(frozenset(item_tuple))
+    resultat.append(frozenset(item_list))
     return set(resultat)
 
 test_list = dict()
