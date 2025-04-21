@@ -65,7 +65,7 @@ locations_dependencies_dic: dict[str, list[str]] = {
     "HoruR1HangingExp": ["DoubleJump", "Glide"],
     "HoruR1Mapstone": ["DoubleJump", "Glide"],
     "HoruR1": ["DoubleJump", "Glide"],
-    "HoruR2": ["DoubleJump", "Glide"],
+    "HoruR2": ["Glide"],
     "HoruR3": ["DoubleJump", "Glide"],
     "HoruR1EnergyCell": ["DoubleJump", "Glide"],
     "HoruR3Plant": ["DoubleJump", "Glide"],
@@ -77,50 +77,68 @@ locations_dependencies_dic: dict[str, list[str]] = {
     "SorrowMap": ["DoubleJump", "Glide"],
 
 }
+all_items = []
+for items in locations_dependencies_dic.values():
+    for item in items:
+        if item not in all_items:
+            all_items.append(item)
 
-def all_combinations(any_list):
-    return itertools.chain.from_iterable(
-        itertools.combinations(any_list, i + 1)
-        for i in range(len(any_list))
-    )
+def find_all_combinations(item_tuple, all_items):
+    all_items_copy = all_items.copy()
+    for item_list in item_tuple:
+        all_items_copy.remove(item_list)
+    #combinations = [itertools.combinations(all_items_copy, i + 1) for i in range(len(all_items_copy))]
+    combinations = []
+    for i in range(len(all_items_copy)):
+        combinations.append(itertools.combinations(all_items_copy, i + 1))
+    resultat = []
+    for combination in combinations:
+        for combination_tuple in combination:
+                combination_list = list(combination_tuple)
+                combination_list.extend(item_tuple)
+                resultat.append(frozenset(combination_list))
+    resultat.append(frozenset(item_tuple))
+    return set(resultat)
 
-tests_list = dict()
+test_list = dict()
 
 for location, items in locations_dependencies_dic.items():
-    for combination in all_combinations(items):
-        combini_tuple = tuple(combination)
 
-        if combini_tuple not in tests_list:
-            tests_list[combini_tuple] = list()
-        tests_list[combini_tuple].append(location)
+    for combination in find_all_combinations(items, all_items):
+        combination_tuple = tuple(combination)
+        if location == "GroveAboveSpiderWaterExp":
+            pass
+        if combination_tuple not in test_list:
+            test_list[combination_tuple] = list()
+        test_list[combination_tuple].append(location)
 
 
-for combini_tuple, locations in tests_list.items():
+for combination_tuple, locations in test_list.items():
 
-    items_name = "_".join(combini_tuple)
+    items_name = "_".join(combination_tuple)
 
-    items_name_doc = ", ".join(combini_tuple)
+    items_name_doc = ", ".join(combination_tuple)
 
     locations_string = ",\n        ".join(f"'{location}'" for location in locations)
 
-    items_string = ", ".join(f"'{item}'" for item in combini_tuple)
+    items_string = ", ".join(f"'{item}'" for item in combination_tuple)
 
     template = f"""
 from worlds.oribf.test import OriBlindForestTestBase
 
 
-class {0}AccessTest(OriBlindForestTestBase):
+class {items_name}AccessTest(OriBlindForestTestBase):
 
-    def test_{0}_location(self) -> None:
-        \"\"\"Test locations that require {1}\"\"\"
+    def test_{items_name}_location(self) -> None:
+        \"\"\"Test locations that require {items_name_doc}\"\"\"
         locations = [
-        {2}
+        {locations_string}
         ]
 
-        items = [[{3}]]
+        items = [[{items_string}]]
 
         self.assertAccessDependency(locations, items)
-""".format(items_name, items_name_doc, locations_string, items_string)
+"""
 
     f = open(f"test_{items_name}_access.py", "w")
     f.write(template)
